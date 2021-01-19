@@ -7,18 +7,29 @@ import spock.lang.Specification
 @SpringBootTest
 class PlayerEntityRepositoryIntegrationSpec extends Specification {
 
+    private static final String DOMAIN = 'PlayerEntityRepositoryIntegrationSpec'
+
     @Autowired
     private PlayerEntityRepository repository
 
-    // TODO JM - more in-depth tests needed, don't rely on pre-created data
+    def 'test - getAllPlayers'() {
+        given:
+        def startingPlayers = repository.saveAll([
+                new PlayerEntity(domain: DOMAIN, name: '1',),
+                new PlayerEntity(domain: DOMAIN, name: '2',),
+        ])
 
-    def 'test - get test player'() {
         when:
-        def result = repository.getAllPlayers('test')
+        def result = repository.getAllPlayers(DOMAIN)
 
         then:
-        //println result
         result
+        result.size() == 2
+        result.find { it.id == startingPlayers[0].id }
+        result.find { it.id == startingPlayers[1].id }
+
+        and:
+        repository.deleteAll(repository.getAllPlayers(DOMAIN))
     }
 
 }

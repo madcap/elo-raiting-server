@@ -8,7 +8,7 @@ class HomeController {
 
     @GetMapping('/')
     String getHome() {
-        return 'ELO Server'
+        return 'ELO Rating Server'
     }
 
 }

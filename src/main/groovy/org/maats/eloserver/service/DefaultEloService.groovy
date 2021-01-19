@@ -54,10 +54,10 @@ class DefaultEloService implements EloService {
         )
         //println "loserProbability = $loserProbability"
 
-        assert (winnerProbability + loserProbability).round(3) == 1.0, 'rating calculation failed'
+        //assert (winnerProbability + loserProbability).round(3) == 1.0, 'probability calculation failed'
 
-        winner.rating = winningPlayer.rating + (K_VALUE * (1 - winnerProbability))
-        loser.rating = losingPlayer.rating + (K_VALUE * (0 - loserProbability))
+        winner.rating = winningPlayer.rating + (K_VALUE * (1 - winnerProbability)).round(3)
+        loser.rating = losingPlayer.rating + (K_VALUE * (0 - loserProbability)).round(3)
 
         return results
     }

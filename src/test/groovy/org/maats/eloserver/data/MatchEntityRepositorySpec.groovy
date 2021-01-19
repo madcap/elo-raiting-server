@@ -10,15 +10,24 @@ class MatchEntityRepositorySpec extends Specification {
     @Autowired
     private MatchEntityRepository repository
 
-    // TODO JM - more in-depth tests needed, don't rely on pre-created data
+    def 'test - validate database access'() {
+        given:
+        def entity = new MatchEntity(
+                domain: 'domain',
+                playerId1: 'player1',
+                playerId2: 'player2',
+        )
 
-    def 'test - get test player'() {
         when:
-        def result = repository.findAll()
+        def result = repository.save(entity)
+
 
         then:
-        //println result
         result
+        result.id
+
+        and:
+        repository.deleteById(result.id)
     }
 
 }

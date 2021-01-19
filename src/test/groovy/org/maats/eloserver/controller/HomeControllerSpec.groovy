@@ -8,6 +8,6 @@ class HomeControllerSpec extends Specification {
 
     def 'test - getHome'() {
         expect:
-        controller.getHome() == "ELO Server"
+        controller.getHome() == 'ELO Rating Server'
     }
 }

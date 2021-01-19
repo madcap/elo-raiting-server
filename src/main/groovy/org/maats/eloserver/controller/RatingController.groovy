@@ -4,6 +4,7 @@ import org.maats.eloserver.model.Match
 import org.maats.eloserver.model.Player
 import org.maats.eloserver.service.RatingService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -17,10 +18,9 @@ class RatingController {
     @Autowired
     private RatingService ratingService
 
-    @RequestMapping(value = '/', method = RequestMethod.GET, produces = 'application/json')
-    @ResponseBody Map<String, Object> ratingHome() {
-        // TODO JM - do something with this
-        return [:]
+    @GetMapping('/')
+    String getHome() {
+        return 'ELO Rating Server'
     }
 
     @RequestMapping(value = '/v1/list/domain/{domain}', method = RequestMethod.GET, produces = 'application/json')
@@ -42,7 +42,7 @@ class RatingController {
     }
 
     @RequestMapping(value = '/v1/match/domain/{domain}/matchId/{matchId}/winningPlayerId/{winningPlayerId}', method = RequestMethod.POST, produces = 'application/json')
-    @ResponseBody Map<String, Object> matchResult(
+    @ResponseBody Map<String, Object> reportMatchResult(
             @PathVariable("domain") String domain,
             @PathVariable("matchId") String matchId,
             @PathVariable("winningPlayerId") String winningPlayerId
