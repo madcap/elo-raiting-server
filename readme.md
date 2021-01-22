@@ -28,3 +28,7 @@ curl --location --request GET '{host}/rating/v1/match/domain/{domain}'
 ```
 curl --location --request POST '{host}/rating/v1/match/domain/{domain}/matchId/{matchId}/winningPlayerId/{winningPlayerId}'
 ```
+
+## Hosted Example
+
+Rate Hades Boons: http://maats.org/hades/

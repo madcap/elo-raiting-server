@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service
 @Service
 class DefaultRatingService implements RatingService {
 
+    // TODO JM - need to clean up the match database once in a while, otherwise it will fill up over time
+
     @Autowired
     private EloService eloService
 
