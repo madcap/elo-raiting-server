@@ -77,12 +77,12 @@ class DefaultRatingServiceSpec extends Specification {
     def 'test - getMatch'() {
         given:
         def players = [
-                new PlayerEntity(id: UUID.randomUUID()),
-                new PlayerEntity(id: UUID.randomUUID()),
-                new PlayerEntity(id: UUID.randomUUID()),
+                new PlayerEntity(id: UUID.randomUUID(), wins: 8, losses: 8,),
+                new PlayerEntity(id: UUID.randomUUID(), wins: 4, losses: 4,),
+                new PlayerEntity(id: UUID.randomUUID(), wins: 0, losses: 0,),
         ]
-        def unsavedMatch = new MatchEntity(domain: DOMAIN, playerId1: players[0].id.toString(), playerId2: players[1].id.toString(), )
-        def savedMatch = new MatchEntity(domain: DOMAIN, playerId1: players[0].id.toString(), playerId2: players[1].id.toString(), id: UUID.randomUUID(), )
+        def unsavedMatch = new MatchEntity(domain: DOMAIN, playerId1: players[2].id.toString(), playerId2: players[1].id.toString(), )
+        def savedMatch = new MatchEntity(domain: DOMAIN, playerId1: players[2].id.toString(), playerId2: players[1].id.toString(), id: UUID.randomUUID(), )
 
         when:
         def result = service.getMatch(DOMAIN)
@@ -92,18 +92,20 @@ class DefaultRatingServiceSpec extends Specification {
                 matchId: savedMatch.id,
                 domain: DOMAIN,
                 player1: new Player(
-                        id: players[0].id.toString(),
+                        id: players[2].id.toString(),
+                        wins: 0,
+                        losses: 0,
                 ),
                 player2: new Player(
                         id: players[1].id.toString(),
+                        wins: 4,
+                        losses: 4,
                 ),
         )
 
         and:
-        1 * mockPlayerEntityRepository.getAllPlayers(DOMAIN) >> (players as Set)
-        1 * mockRandom.nextInt(3) >> 0
-        1 * mockRandom.nextInt(3) >> 0
-        1 * mockRandom.nextInt(3) >> 1
+        1 * mockPlayerEntityRepository.getAllPlayers(DOMAIN) >> (players.collect { it } as Set)
+        1 * mockRandom.nextInt(2) >> 0
         1 * mockMatchEntityRepository.save(unsavedMatch) >> savedMatch
         0 * _
     }

@@ -45,22 +45,15 @@ class DefaultRatingService implements RatingService {
         // TODO JM - handle size <= 1 better
         assert playerCount > 1, 'domain does not have enough players to create a match'
 
-        // pick 2 players at random
-        int playerIndex1 = random.nextInt(playerCount)
-        int playerIndex2 = random.nextInt(playerCount)
-        while(playerIndex2 == playerIndex1) {
-            // ensure that we don't use the same player for both spots in the match
-            playerIndex2 = random.nextInt(playerCount)
-        }
+        // for the first player pick the player that has played the least games
+        allPlayers.sort { it.wins + it.losses }
+        PlayerEntity playerEntity1 = allPlayers[0]
+        //println "player1: $playerEntity1"
 
-        PlayerEntity playerEntity1 = allPlayers[playerIndex1]
+        // pick the second player randomly (excluding the first index which is already picked)
+        int playerIndex2 = random.nextInt(playerCount - 1) + 1
         PlayerEntity playerEntity2 = allPlayers[playerIndex2]
-
-        // pick 2 players that have played the least games
-//        allPlayers.sort { it.wins + it.losses }
-//
-//        PlayerEntity playerEntity1 = allPlayers[0]
-//        PlayerEntity playerEntity2 = allPlayers[1]
+        //println "player2: $playerEntity2"
 
         MatchEntity matchEntity = matchEntityRepository.save(new MatchEntity(
                 domain: domain,
