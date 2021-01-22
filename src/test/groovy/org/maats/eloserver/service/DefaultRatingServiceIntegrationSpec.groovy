@@ -49,6 +49,7 @@ class DefaultRatingServiceIntegrationSpec extends Specification {
         then:
         def results = playerEntityRepository.getAllPlayers(DOMAIN)
         results.each {
+            //println it
             assert it.wins
             assert it.losses
             assert it.rating != 1500.0

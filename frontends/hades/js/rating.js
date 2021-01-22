@@ -81,9 +81,10 @@ $(document).ready(function () {
             players.sort((a, b) => (a.rating > b.rating) ? 1 : -1);
             let html = "";
             players.reverse().forEach(function(player) {
-                html = html + player.name + "  " + player.rating + "<br/>";
+                html = html + "<tr><th>" + player.name + "</th><th>" + player.rating + "</th><th>" + player.wins + "</th><th>" + player.losses + "</th></tr>"
+                    //html + player.name + "  " + player.rating + "<br/>";
             });
-            $("#ranking").html(html);
+            $("#rankingTableBody").html(html);
         });
     });
 
